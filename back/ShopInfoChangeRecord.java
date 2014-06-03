@@ -13,5 +13,4 @@ public class ShopInfoChangeRecord extends ReportBase implements IShop {
 		// TODO Auto-generated method stub
 		return 0;
 	}
-
 }

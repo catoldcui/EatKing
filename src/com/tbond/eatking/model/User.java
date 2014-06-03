@@ -1,17 +1,13 @@
 package com.tbond.eatking.model;
 
-public class User implements IUser {
-
-	@Override
-	public int getUid() {
-		// TODO Auto-generated method stub
-		return 0;
+public class User {
+	public static User instance = new User();
+	
+	public boolean isLogin = false;
+	public String uid = "";
+	public String userName = "";
+	
+	public static User getInstance(){
+		return instance;
 	}
-
-	@Override
-	public int setUid(int uid) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
 }
