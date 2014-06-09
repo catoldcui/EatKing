@@ -22,7 +22,7 @@
 	<!-- Release key is in the p_strings.xml file ignored by Git -->
 	<string name="google_map_api_key_debug">0IgVgWFseCoAyOOEFSXlrEhfjQE99UGBY_sh2CA</string>
 	
-    <string name="app_name">EatKing</string>
+    <string name="app_name">吃货联盟</string>
     
     <string name="more_info_on_greendroid">For more information on the GreenDroid library, go to the GitHub project\'s web page:</string>
     
@@ -61,4 +61,12 @@
     
     <string name="about_content">GreenDroid is a development library for the Android platform. It is intented to make UI developments easier and consistent through your applications.\n\nThe GreenDroid project has been initiated by <a href="http://www.cyrilmottier.com">Cyril Mottier</a></string>
     
+    <string name="newOne">新建</string>
+    <string name="recommand">推荐</string>
+    <string name="list">榜单</string>
+    <string name="more">更多</string>
+    
+    <string name="personalInfo">个人资料</string>
+    <string name="mark">收藏</string>
+    <string name="setting">设置</string>
 </resources>

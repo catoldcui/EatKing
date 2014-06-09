@@ -1,47 +1,39 @@
 package com.tbond.eatking.view;
 
 import greendroid.app.GDActivity;
-import greendroid.app.GDApplication;
-import greendroid.util.Config;
 import greendroid.widget.ActionBar;
 import greendroid.widget.ActionBarItem;
-import greendroid.widget.LoaderActionBarItem;
-import greendroid.widget.NormalActionBarItem;
+import greendroid.widget.QuickAction;
+import greendroid.widget.QuickActionBar;
+import greendroid.widget.QuickActionWidget;
 import greendroid.widget.SegmentedAdapter;
 import greendroid.widget.SegmentedHost;
-import greendroid.widget.ActionBar.OnActionBarListener;
 import greendroid.widget.ActionBarItem.Type;
-import greendroid.widget.TitleActionBarItem;
+import greendroid.widget.QuickActionWidget.OnQuickActionClickListener;
 
-import org.json.JSONObject;
-
-import com.loopj.android.http.JsonHttpResponseHandler;
 import com.tbond.eatking.R;
-import com.tbond.eatking.net.Api;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
-import android.app.Fragment;
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.ColorFilter;
+import android.graphics.LightingColorFilter;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.os.Build;
 
 public class MainActivity extends GDActivity {
 
 	private final Handler mHandler = new Handler();
     private PeopleSegmentedAdapter mAdapter;
     SegmentedHost segmentedHost;
+    private QuickActionBar mBar;
     
     public MainActivity(){
     	super(ActionBar.Type.Normal);
@@ -75,8 +67,35 @@ public class MainActivity extends GDActivity {
 //        addActionBarItem(Type.Locate, R.id.action_bar_locate);
         
         segmentedHost.setAdapter(mAdapter);
+        prepareQuickActionBar();
+    }
+    
+    /**
+     * 准备actionbar中的listbar，在listListener中显示
+     */
+    private void prepareQuickActionBar() {
+        mBar = new QuickActionBar(this);
+        mBar.addQuickAction(new MyQuickAction(this, R.drawable.gd_action_bar_all_friends, R.string.personalInfo));
+        mBar.addQuickAction(new MyQuickAction(this, R.drawable.gd_action_bar_star, R.string.mark));
+        mBar.addQuickAction(new MyQuickAction(this, R.drawable.gd_action_bar_compose, R.string.setting));
+
+        mBar.setOnQuickActionClickListener(mActionListener);
     }
 
+    /**
+     * 点击listbar中的项事件
+     */
+    private OnQuickActionClickListener mActionListener = new OnQuickActionClickListener() {
+        public void onQuickActionClicked(QuickActionWidget widget, int position) {
+            Toast.makeText(MainActivity.this, "Item " + position + " clicked", Toast.LENGTH_SHORT).show();
+        }
+    };
+    
+    /**
+     * segmentbar四个小项的事件处理以及名称
+     * @author Administrator
+     *
+     */
     private class PeopleSegmentedAdapter extends SegmentedAdapter {
 
         public boolean mReverse = false;
@@ -99,26 +118,30 @@ public class MainActivity extends GDActivity {
 
             switch (mReverse ? ((getCount() - 1) - position) : position) {
                 case 0:
-                    return getString(R.string.segment_1);
+                    return getString(R.string.newOne);
                 case 1:
-                    return getString(R.string.segment_2);
+                    return getString(R.string.recommand);
                 case 2:
-                    return getString(R.string.segment_3);
+                    return getString(R.string.list);
                 case 3:
-                    return getString(R.string.segment_4);
+                    return getString(R.string.more);
             }
 
             return null;
         }
     }
     
+    /**
+     * 处理actionbar上的除了homelist的所有事件
+     */
     @Override
     public boolean onHandleActionBarItemClick(ActionBarItem item, int position) {
     	
         int itemId = item.getItemId();
         if (itemId == R.id.action_bar_search) {
-			TextView textView = (TextView) findViewById(R.id.text);
-            textView.setText("action_bar_search");
+        	Intent intent = new Intent();
+            intent.setClass(MainActivity.this, SearchActivity.class);
+            startActivity(intent);
         } else {
 			return super.onHandleActionBarItemClick(item, position);
 		}
@@ -126,12 +149,38 @@ public class MainActivity extends GDActivity {
         return true;
     }
     
+    /**
+     * 处理listbar事件
+     * @author Administrator
+     *
+     */
     private class ListBarListener implements OnClickListener {
 		@Override
 		public void onClick(View arg0) {
-			TextView textView = (TextView) findViewById(R.id.text);
-            textView.setText("action_bar_first_item");
+			mBar.show(arg0);
 		}
     };
+    
+    /**
+     * 自己quickActionBar
+     * @author Administrator
+     *
+     */
+    private static class MyQuickAction extends QuickAction {
+        /**
+         * 设置图片颜色
+         */
+        private static final ColorFilter BLACK_CF = new LightingColorFilter(Color.BLACK, Color.BLACK);
 
+        public MyQuickAction(Context ctx, int drawableId, int titleId) {
+            super(ctx, buildDrawable(ctx, drawableId), titleId);
+        }
+        
+        private static Drawable buildDrawable(Context ctx, int drawableId) {
+            Drawable d = ctx.getResources().getDrawable(drawableId);
+            d.setColorFilter(BLACK_CF);
+            return d;
+        }
+        
+    }
 }
