@@ -2,10 +2,6 @@ package com.tbond.eatking.net;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.InputStream;
-import java.io.UnsupportedEncodingException;
-
-import org.json.JSONException;
 
 import android.os.Environment;
 import android.util.Log;
@@ -72,10 +68,10 @@ public class Api {
 	
 	/**
 	 * 通过中心位置获得radius半径内所有商店信息
-	 * @param locX 经度
-	 * @param locY 纬度
-	 * @param radius  半径，半径为0时，获得所有
-	 * @param reponseHandler  json文件
+	 * @param locX
+	 * @param locY
+	 * @param radius
+	 * @param reponseHandler
 	 */
 	public void searchShopByLoc(double locX, double locY, double radius, JsonHttpResponseHandler reponseHandler){
 		
@@ -150,7 +146,7 @@ public class Api {
 	
 	/**
 	 * 创建菜信息
-	 * @param shopID
+	 * @param shopId
 	 * @param dishName
 	 * @param dishPrice
 	 * @param reponseHandler
@@ -161,7 +157,7 @@ public class Api {
 	
 	/**
 	 * 通过信息搜索店铺
-	 * @param info
+	 * @param key
 	 * @param reponseHandler
 	 */
 	public void searchShopByKey(String key, JsonHttpResponseHandler reponseHandler){
@@ -170,15 +166,15 @@ public class Api {
 	
 	/**
 	 * 举报店铺信息
-	 * @param sid
+	 * @param shopId
 	 * @param shopName
-	 * @param locX
-	 * @param locY
+	 * @param locationX
+	 * @param locationY
 	 * @param phoneNumber
 	 * @param state
 	 * @param businessTime
-	 * @param reponseHandler
 	 * @param comment
+	 * @param reponseHandler
 	 */
 	public void addShopReport(String shopId, String shopName, double locationX, double locationY, String phoneNumber, 
 			String state, String businessTime, String comment, JsonHttpResponseHandler reponseHandler){
@@ -187,9 +183,7 @@ public class Api {
 	
 	/**
 	 * 举报菜信息
-	 * @param did
-	 * @param shopId
-	 * @param dishName
+	 * @param dishId
 	 * @param comment
 	 * @param reponseHandler
 	 */

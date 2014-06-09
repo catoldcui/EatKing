@@ -1,116 +1,137 @@
 package com.tbond.eatking.view;
 
+import greendroid.app.GDActivity;
+import greendroid.app.GDApplication;
+import greendroid.util.Config;
+import greendroid.widget.ActionBar;
+import greendroid.widget.ActionBarItem;
+import greendroid.widget.LoaderActionBarItem;
+import greendroid.widget.NormalActionBarItem;
+import greendroid.widget.SegmentedAdapter;
+import greendroid.widget.SegmentedHost;
+import greendroid.widget.ActionBar.OnActionBarListener;
+import greendroid.widget.ActionBarItem.Type;
+import greendroid.widget.TitleActionBarItem;
+
 import org.json.JSONObject;
 
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.tbond.eatking.R;
 import com.tbond.eatking.net.Api;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 import android.os.Build;
 
-public class MainActivity extends Activity {
+public class MainActivity extends GDActivity {
 
+	private final Handler mHandler = new Handler();
+    private PeopleSegmentedAdapter mAdapter;
+    SegmentedHost segmentedHost;
+    
+    public MainActivity(){
+    	super(ActionBar.Type.Normal);
+    }
+    
+    @SuppressLint("NewApi")
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_main);
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        
+        setActionBarContentView(R.layout.activity_main);
 
-		if (savedInstanceState == null) {
-			getFragmentManager().beginTransaction()
-					.add(R.id.container, new PlaceholderFragment()).commit();
-			
-			Log.i("eatking", "test");
-			Button button = (Button)findViewById(R.id.button1);
-			button.setOnClickListener(new View.OnClickListener() {
-				@Override
-				public void onClick(View v) {
-					Log.i("inClick", "true");
-					// TODO Auto-generated method stub
-					Api.getInstance().login("tbond", "tbond", new JsonHttpResponseHandler(){
-						@Override
-						public void onFailure(Throwable e, JSONObject errorResponse) {
-//							dialog.dismiss();
-//							LogUtil.i(TAG, "login request onFailure:" + errorResponse.toString());
-//							super.onFailure(e, errorResponse);
-							Log.i("eatking", "onFailure");
-							Log.i("response", e.toString());
-						}
+        segmentedHost = (SegmentedHost) findViewById(R.id.segmented_host);
+        
+        mAdapter = new PeopleSegmentedAdapter();
+//        mHandler.postDelayed(new Runnable() {
+//            public void run() {
+//                mAdapter.mReverse = true;
+//                mAdapter.notifyDataSetChanged();
+//            }
+//        }, 4000);
+        getActionBar().setFirstDrawable(this, R.drawable.gd_action_bar_list);
+        getActionBar().getFirstButton().setOnClickListener(new ListBarListener());;
+        addActionBarItem(Type.Search, R.id.action_bar_search);
+//        TitleActionBarItem titleActionBarItem = new TitleActionBarItem(getString(R.string.gd_mail));
+//        addActionBarItem(titleActionBarItem, R.id.action_bar_title);
+//        addActionBarItem(getActionBar()
+//                .newActionBarItem(NormalActionBarItem.class)
+//                .setDrawable(R.drawable.ic_title_export)
+//                .setContentDescription(R.string.gd_export), R.id.action_bar_export);
+//        addActionBarItem(Type.Locate, R.id.action_bar_locate);
+        
+        segmentedHost.setAdapter(mAdapter);
+    }
 
-						@Override
-						public void onSuccess(JSONObject response) {
-							Log.i("eatking", "onSuccess");
-							//LogUtil.i(TAG, "login request onSuccess:" + response.toString());
-							//dialog.dismiss();s
-							Log.i("response", response.toString());
-							
-//							int result;
-//							try {
-//								result = response.getInt("result");
-//								if(result == Api.LOGIN_SUCCESS){
-//				
-//									Intent it = new Intent(MainActivity.this, MainActivity.class);
-//									startActivity(it);
-//									MainActivity.this.finish();
-//								}else{
-//									Toast.makeText(MainActivity.this, getString(R.string.loginac_login_failed), Toast.LENGTH_SHORT).show();
-//								}
-//							} catch (JSONException e) {
-//								e.printStackTrace();
-//							}	
-						}
-					});
-				}
-			});
-		}
-	}
+    private class PeopleSegmentedAdapter extends SegmentedAdapter {
 
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
+        public boolean mReverse = false;
 
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.main, menu);
-		return true;
-	}
+        @Override
+        public View getView(int position, ViewGroup parent) {
+            TextView textView = (TextView) getLayoutInflater().inflate(R.layout.text, parent, false);
+            textView.setText(getSegmentTitle(position));
+            
+            return textView;
+        }
 
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		// Handle action bar item clicks here. The action bar will
-		// automatically handle clicks on the Home/Up button, so long
-		// as you specify a parent activity in AndroidManifest.xml.
-		int id = item.getItemId();
-		if (id == R.id.action_settings) {
-			return true;
-		}
-		return super.onOptionsItemSelected(item);
-	}
+        @Override
+        public int getCount() {
+            return 4;
+        }
 
-	/**
-	 * A placeholder fragment containing a simple view.
-	 */
-	public static class PlaceholderFragment extends Fragment {
+        @Override
+        public String getSegmentTitle(int position) {
 
-		public PlaceholderFragment() {
+            switch (mReverse ? ((getCount() - 1) - position) : position) {
+                case 0:
+                    return getString(R.string.segment_1);
+                case 1:
+                    return getString(R.string.segment_2);
+                case 2:
+                    return getString(R.string.segment_3);
+                case 3:
+                    return getString(R.string.segment_4);
+            }
+
+            return null;
+        }
+    }
+    
+    @Override
+    public boolean onHandleActionBarItemClick(ActionBarItem item, int position) {
+    	
+        int itemId = item.getItemId();
+        if (itemId == R.id.action_bar_search) {
+			TextView textView = (TextView) findViewById(R.id.text);
+            textView.setText("action_bar_search");
+        } else {
+			return super.onHandleActionBarItemClick(item, position);
 		}
 
+        return true;
+    }
+    
+    private class ListBarListener implements OnClickListener {
 		@Override
-		public View onCreateView(LayoutInflater inflater, ViewGroup container,
-				Bundle savedInstanceState) {
-			View rootView = inflater.inflate(R.layout.fragment_main, container,
-					false);
-			return rootView;
+		public void onClick(View arg0) {
+			TextView textView = (TextView) findViewById(R.id.text);
+            textView.setText("action_bar_first_item");
 		}
-	}
+    };
 
 }

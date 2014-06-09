@@ -16,5 +16,13 @@
     <style name="AppTheme" parent="AppBaseTheme">
         <!-- All customizations that are NOT specific to a particular API-level can go here. -->
     </style>
+    
+    <style name="SeparatorItemView" parent="GreenDroid.Widget.ItemView.SeparatorItemView">
+        <item name="android:background">@drawable/separator_bg</item>
+    </style>
+    
+    <style name="TextAppearanceLarge" parent="@style/TextAppearance.Large">
+        <item name="android:textSize">18sp</item>
+    </style>
 
 </resources>
