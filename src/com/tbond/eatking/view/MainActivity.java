@@ -1,5 +1,7 @@
 package com.tbond.eatking.view;
 
+import org.json.JSONObject;
+
 import greendroid.app.GDActivity;
 import greendroid.widget.ActionBar;
 import greendroid.widget.ActionBarItem;
@@ -10,8 +12,12 @@ import greendroid.widget.SegmentedAdapter;
 import greendroid.widget.SegmentedHost;
 import greendroid.widget.ActionBarItem.Type;
 import greendroid.widget.QuickActionWidget.OnQuickActionClickListener;
+import greendroid.widget.SegmentedBar.OnSegmentChangeListener;
 
+import com.loopj.android.http.JsonHttpResponseHandler;
 import com.tbond.eatking.R;
+import com.tbond.eatking.net.Api;
+import com.tencent.tencentmap.mapsdk.map.MapView;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -22,6 +28,7 @@ import android.graphics.LightingColorFilter;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
@@ -30,10 +37,10 @@ import android.widget.Toast;
 
 public class MainActivity extends GDActivity {
 
-	private final Handler mHandler = new Handler();
     private PeopleSegmentedAdapter mAdapter;
     SegmentedHost segmentedHost;
     private QuickActionBar mBar;
+    private Intent intent;
     
     public MainActivity(){
     	super(ActionBar.Type.Normal);
@@ -47,6 +54,7 @@ public class MainActivity extends GDActivity {
         setActionBarContentView(R.layout.activity_main);
 
         segmentedHost = (SegmentedHost) findViewById(R.id.segmented_host);
+        segmentedHost.getSegmentedBar().setOnSegmentChangeListener(new SegmentSwitcher());
         
         mAdapter = new PeopleSegmentedAdapter();
 //        mHandler.postDelayed(new Runnable() {
@@ -65,7 +73,6 @@ public class MainActivity extends GDActivity {
 //                .setDrawable(R.drawable.ic_title_export)
 //                .setContentDescription(R.string.gd_export), R.id.action_bar_export);
 //        addActionBarItem(Type.Locate, R.id.action_bar_locate);
-        
         segmentedHost.setAdapter(mAdapter);
         prepareQuickActionBar();
     }
@@ -91,23 +98,60 @@ public class MainActivity extends GDActivity {
         }
     };
     
+    private class SegmentSwitcher implements OnSegmentChangeListener {
+        public void onSegmentChange(int index, boolean clicked) {
+            changeActivity(index);
+        }
+    }
+    
+    public void changeActivity(int index){
+    	Log.i("index", "点了点了" + index);
+    	segmentedHost.getSegmentedBar().setEnabled(false);
+    	switch (index) {
+		case 0:
+			intent = new Intent();
+            intent.setClass(MainActivity.this, CreateShopActivity.class);
+            startActivity(intent);
+            break;
+		case 1:
+			Api.getInstance().login("tbond", "tbond", new JsonHttpResponseHandler(){
+				@Override
+				public void onFailure(Throwable e, JSONObject errorResponse) {
+//					dialog.dismiss();
+//					LogUtil.i(TAG, "login request onFailure:" + errorResponse.toString());
+//					super.onFailure(e, errorResponse);
+					Log.i("eatking", "onFailure");
+					Log.i("response", e.toString());
+				}
+
+				@Override
+				public void onSuccess(JSONObject response) {
+					Log.i("eatking", "onSuccess");
+					//LogUtil.i(TAG, "login request onSuccess:" + response.toString());
+					//dialog.dismiss();
+					Log.i("response", response.toString());
+				}
+			});
+		
+			break;
+		case 2:
+			
+			break;
+		case 3:
+			
+			break;
+
+		default:
+			break;
+		}
+    }
+    
     /**
      * segmentbar四个小项的事件处理以及名称
      * @author Administrator
      *
      */
     private class PeopleSegmentedAdapter extends SegmentedAdapter {
-
-        public boolean mReverse = false;
-
-        @Override
-        public View getView(int position, ViewGroup parent) {
-            TextView textView = (TextView) getLayoutInflater().inflate(R.layout.text, parent, false);
-            textView.setText(getSegmentTitle(position));
-            
-            return textView;
-        }
-
         @Override
         public int getCount() {
             return 4;
@@ -115,8 +159,7 @@ public class MainActivity extends GDActivity {
 
         @Override
         public String getSegmentTitle(int position) {
-
-            switch (mReverse ? ((getCount() - 1) - position) : position) {
+            switch (position) {
                 case 0:
                     return getString(R.string.newOne);
                 case 1:
@@ -129,6 +172,12 @@ public class MainActivity extends GDActivity {
 
             return null;
         }
+
+		@Override
+		public View getView(int position, ViewGroup parent) {
+			// TODO Auto-generated method stub
+			return null;
+		}
     }
     
     /**

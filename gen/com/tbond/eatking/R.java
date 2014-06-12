@@ -609,7 +609,7 @@ containing a value of this type.
          would include 7" and 10" devices in landscape (~960dp and ~1280dp respectively).
     
          */
-        public static final int activity_horizontal_margin=0x7f07000f;
+        public static final int activity_horizontal_margin=0x7f070011;
         public static final int gd_action_bar_height=0x7f07000b;
         public static final int gd_arrow_offset=0x7f07000c;
         public static final int gd_drawable_height=0x7f070006;
@@ -623,7 +623,9 @@ containing a value of this type.
         public static final int gd_progress_bar_width=0x7f070008;
         public static final int gd_separator_item_view_height=0x7f070000;
         public static final int gd_separator_item_view_padding_left=0x7f070001;
-        public static final int thumbnail_radius=0x7f07000e;
+        public static final int padding_size=0x7f070010;
+        public static final int thumbnail_padding=0x7f07000e;
+        public static final int thumbnail_radius=0x7f07000f;
         public static final int thumbnail_size=0x7f07000d;
     }
     public static final class drawable {
@@ -727,14 +729,15 @@ containing a value of this type.
         public static final int separator_bg=0x7f020061;
     }
     public static final class id {
-        public static final int about=0x7f05001c;
+        public static final int about=0x7f05001d;
+        public static final int action_bar_back=0x7f05001c;
         public static final int action_bar_export=0x7f050018;
         public static final int action_bar_locate=0x7f05001a;
         public static final int action_bar_refresh=0x7f050016;
         public static final int action_bar_search=0x7f050017;
         public static final int action_bar_title=0x7f050019;
         public static final int action_bar_view_info=0x7f05001b;
-        public static final int async_image=0x7f050035;
+        public static final int async_image=0x7f050036;
         public static final int back=0x7f050003;
         public static final int bottom=0x7f050009;
         public static final int center=0x7f05000e;
@@ -742,53 +745,53 @@ containing a value of this type.
         public static final int center_vertical=0x7f05000c;
         public static final int dashboard=0x7f050001;
         public static final int empty=0x7f050002;
-        public static final int et_searchtext_search=0x7f05003c;
+        public static final int et_searchtext_search=0x7f05003d;
         public static final int gd_action_bar=0x7f050013;
         public static final int gd_action_bar_content_view=0x7f050015;
-        public static final int gd_action_bar_first_item=0x7f050023;
-        public static final int gd_action_bar_home_item=0x7f05001e;
+        public static final int gd_action_bar_first_item=0x7f050020;
         public static final int gd_action_bar_host=0x7f050014;
-        public static final int gd_action_bar_item=0x7f050020;
-        public static final int gd_action_bar_item_progress_bar=0x7f050021;
-        public static final int gd_action_bar_item_title=0x7f050022;
-        public static final int gd_action_bar_title=0x7f05001f;
-        public static final int gd_description=0x7f050024;
-        public static final int gd_drawable=0x7f050025;
-        public static final int gd_progress_bar=0x7f050027;
+        public static final int gd_action_bar_item=0x7f050022;
+        public static final int gd_action_bar_item_progress_bar=0x7f050023;
+        public static final int gd_action_bar_item_title=0x7f050024;
+        public static final int gd_action_bar_title=0x7f050021;
+        public static final int gd_description=0x7f050025;
+        public static final int gd_drawable=0x7f050026;
+        public static final int gd_progress_bar=0x7f050028;
         public static final int gd_segmented_bar=0x7f050011;
         public static final int gd_segmented_content_view=0x7f050012;
-        public static final int gd_separator_text=0x7f050030;
-        public static final int gd_subtext=0x7f050031;
-        public static final int gd_subtitle=0x7f050032;
-        public static final int gd_text=0x7f050026;
-        public static final int gd_thumbnail=0x7f050033;
-        public static final int gdi_arrow_down=0x7f05002e;
-        public static final int gdi_arrow_up=0x7f050029;
-        public static final int gdi_footer=0x7f05002d;
-        public static final int gdi_grid=0x7f05002f;
-        public static final int gdi_header=0x7f050028;
-        public static final int gdi_quick_action_items=0x7f05002c;
-        public static final int gdi_rack=0x7f05002b;
-        public static final int gdi_scroll=0x7f05002a;
+        public static final int gd_separator_text=0x7f050031;
+        public static final int gd_subtext=0x7f050032;
+        public static final int gd_subtitle=0x7f050033;
+        public static final int gd_text=0x7f050027;
+        public static final int gd_thumbnail=0x7f050034;
+        public static final int gdi_arrow_down=0x7f05002f;
+        public static final int gdi_arrow_up=0x7f05002a;
+        public static final int gdi_footer=0x7f05002e;
+        public static final int gdi_grid=0x7f050030;
+        public static final int gdi_header=0x7f050029;
+        public static final int gdi_quick_action_items=0x7f05002d;
+        public static final int gdi_rack=0x7f05002c;
+        public static final int gdi_scroll=0x7f05002b;
         public static final int hdpi=0x7f050006;
-        public static final int ib_searchtext_delete=0x7f05003d;
-        public static final int image_view=0x7f050034;
+        public static final int ib_searchtext_delete=0x7f05003e;
+        public static final int image_view=0x7f050035;
         public static final int ldpi=0x7f050004;
         public static final int left=0x7f05000a;
-        public static final int map_view=0x7f050037;
+        public static final int map_view=0x7f050038;
+        public static final int mapviewtraffic=0x7f05001f;
         public static final int mdpi=0x7f050005;
         public static final int multiple=0x7f050010;
         public static final int normal=0x7f050000;
-        public static final int page_indicator_next=0x7f05003a;
-        public static final int page_indicator_other=0x7f05003b;
-        public static final int page_indicator_prev=0x7f050039;
-        public static final int paged_view=0x7f050038;
+        public static final int page_indicator_next=0x7f05003b;
+        public static final int page_indicator_other=0x7f05003c;
+        public static final int page_indicator_prev=0x7f05003a;
+        public static final int paged_view=0x7f050039;
         public static final int right=0x7f05000b;
-        public static final int segmented_host=0x7f05001d;
+        public static final int segmented_host=0x7f05001e;
         public static final int single=0x7f05000f;
-        public static final int text=0x7f050036;
+        public static final int text=0x7f050037;
         public static final int top=0x7f050008;
-        public static final int web_view=0x7f05003e;
+        public static final int web_view=0x7f05003f;
         public static final int xhdpi=0x7f050007;
     }
     public static final class layout {
@@ -829,15 +832,16 @@ containing a value of this type.
         public static final int image=0x7f030022;
         public static final int image_item_view=0x7f030023;
         public static final int info=0x7f030024;
-        public static final int main_activity=0x7f030025;
-        public static final int map_pin=0x7f030026;
-        public static final int paged_view=0x7f030027;
-        public static final int paged_view_item=0x7f030028;
-        public static final int quick_action=0x7f030029;
-        public static final int searchtext=0x7f03002a;
-        public static final int segmented_host=0x7f03002b;
-        public static final int text=0x7f03002c;
-        public static final int web_view=0x7f03002d;
+        public static final int map_pin=0x7f030025;
+        public static final int paged_view=0x7f030026;
+        public static final int paged_view_item=0x7f030027;
+        public static final int quick_action=0x7f030028;
+        public static final int search_activity=0x7f030029;
+        public static final int search_list_item=0x7f03002a;
+        public static final int searchtext=0x7f03002b;
+        public static final int segmented_host=0x7f03002c;
+        public static final int text=0x7f03002d;
+        public static final int web_view=0x7f03002e;
     }
     public static final class string {
         public static final int about=0x7f08002b;
